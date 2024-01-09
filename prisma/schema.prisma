@@ -285,6 +285,8 @@ model profile {
     organization    String?   @db.VarChar(500)
     contact_address String?   @db.LongText
     phone           String?   @db.VarChar(500)
+    phone2          String?   @db.VarChar(500)
+    district_code   Int?
     email           String?   @db.VarChar(500)
     invoice_name    String?   @db.VarChar(500)
     invoice_address String?   @db.LongText
@@ -314,9 +316,11 @@ model equipment_booking {
     organization             String?                    @db.VarChar(500)
     contact_address          String?                    @db.LongText
     phone                    String?                    @db.VarChar(500)
+    phone2                   String?                    @db.VarChar(500)
     email                    String?                    @db.VarChar(500)
     invoice_address          String?                    @db.LongText
     tax_id                   String?                    @db.VarChar(500)
+    district_code            Int?
     price                    Int?
     reject_comment           String?                    @db.LongText
     confirmed_date           DateTime?

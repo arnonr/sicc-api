@@ -118,6 +118,7 @@ const selectField = {
   organization: true,
   contact_address: true,
   phone: true,
+  phone2: true,
   email: true,
   invoice_address: true,
   tax_id: true,
@@ -128,6 +129,7 @@ const selectField = {
   is_publish: true,
   member_status: true,
   period_time: true,
+  district_code: true,
   equipment: {
     select: {
       title_th: true,
@@ -317,6 +319,8 @@ const methods = {
           invoice_address: req.body.invoice_address,
           tax_id: req.body.tax_id,
           price: req.body.price,
+          district_code: Number(req.body.district_code),
+          phone2: req.body.phone2,
           //   reject_comment: req.body.reject_comment,
           //   confirmed_date: req.body.confirmed_date,
           status_id: Number(req.body.status_id),
@@ -389,6 +393,8 @@ const methods = {
               : undefined,
           phone: req.body.phone != null ? req.body.phone : undefined,
           email: req.body.email != null ? req.body.email : undefined,
+          district_code: Number(req.body.district_code),
+          phone2: req.body.phone2,
           invoice_address:
             req.body.invoice_address != null
               ? req.body.invoice_address
