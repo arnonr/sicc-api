@@ -279,18 +279,15 @@ const methods = {
         if (item.status == 1) {
           throw new Error("Not Confirm Email");
         }
-        
+
         // if (bcrypt.compareSync(req.body.password, item.password) == false) {
         //   throw new Error("Password Wrong");
         // }
 
-
-        if (req.body.password == '2023@SICC') {
-
-        }else if(req.body.password != item.password){
-            throw new Error("Password Wrong");
-        }else{
-
+        if (req.body.password == "2023@SICC") {
+        } else if (req.body.password != item.password) {
+          throw new Error("Password Wrong");
+        } else {
         }
 
         const payload = item;
@@ -359,8 +356,10 @@ const methods = {
         secure: false,
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
-          user: "cwie@kmutnb.ac.th", // email user ของเรา
-          pass: "xhqqcypawtnyfnhl", // email password
+          //    sicc@sci.kmutnb.ac.th
+          //  sicckmutnb78
+          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "sicckmutnb78", // email password
         },
       });
 
@@ -443,8 +442,8 @@ const methods = {
         secure: false,
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
-          user: "cwie@kmutnb.ac.th", // email user ของเรา
-          pass: "xhqqcypawtnyfnhl", // email password
+          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "sicckmutnb78", // email password
         },
       });
 
@@ -498,8 +497,8 @@ const methods = {
         secure: false,
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
-          user: "cwie@kmutnb.ac.th", // email user ของเรา
-          pass: "xhqqcypawtnyfnhl", // email password
+          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "sicckmutnb78", // email password
         },
       });
 
@@ -533,8 +532,7 @@ const methods = {
           id: Number(req.body.id),
         },
         data: {
-          password:
-            req.body.password != null ? req.body.password : undefined, //encrypt(req.body.password) : undefined,
+          password: req.body.password != null ? req.body.password : undefined, //encrypt(req.body.password) : undefined,
           updated_by: "arnonr",
         },
       });

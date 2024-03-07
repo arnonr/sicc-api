@@ -108,7 +108,7 @@ const countDataAndOrder = async (req, $where) => {
   if (req.query.orderBy) {
     $orderBy[req.query.orderBy] = req.query.order;
   } else {
-    $orderBy = { created_at: "desc" };
+    $orderBy = [{ created_news: "desc" }, { created_at: "desc" }];
   }
 
   //Count

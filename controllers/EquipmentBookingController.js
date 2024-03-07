@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const uploadController = require("./UploadsController");
+const nodemailer = require("nodemailer");
 
 const prisma = new PrismaClient();
 
@@ -348,6 +349,62 @@ const methods = {
         });
       }
 
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "sicckmutnb78", // email password
+        },
+      });
+
+      //   email
+      let item_user = await prisma.user.findMany({
+        where: {
+          group_id: { in: [1, 3] },
+          is_active: 1,
+        },
+      });
+
+      let email1 = [];
+      let email2 = [];
+      for (let itu of item_user) {
+        if (itu.group_id == 1) {
+          email1.push(itu.email);
+        }
+
+        if (itu.group_id == 3) {
+          email2.push(itu.email);
+        }
+      }
+
+      if (email1.length > 0) {
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: email1, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
+          html:
+            "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
+            process.env.PATH_CLIENT +
+            "admin/booking" +
+            "'>คลิก</a>", // html body
+        });
+      }
+
+      if (email2.length > 0) {
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: email2, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
+          html:
+            "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
+            process.env.PATH_CLIENT +
+            "admin/booking" +
+            "'>คลิก</a>", // html body
+        });
+      }
+
       res.status(201).json({ ...item, msg: "success" });
     } catch (error) {
       res.status(400).json({ msg: error.message });
@@ -437,6 +494,52 @@ const methods = {
         }
       }
 
+      //   email
+      //   let item_user = await prisma.user.findMany({
+      //     where: {
+      //       group_id: { in: [1, 3] },
+      //       is_active: 1,
+      //     },
+      //   });
+
+      //   let email1 = [];
+      //   let email2 = [];
+      //   for (let itu of item_user) {
+      //     if (itu.group_id == 1) {
+      //       email1.push(itu.email);
+      //     }
+
+      //     if (itu.group_id == 3) {
+      //       email2.push(itu.email);
+      //     }
+      //   }
+
+      //   if (email1.length > 0) {
+      //     await transporter.sendMail({
+      //       from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+      //       to: itu.email1, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+      //       subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
+      //       html:
+      //         "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
+      //         process.env.PATH_CLIENT +
+      //         "admin/booking" +
+      //         "'>คลิก</a>", // html body
+      //     });
+      //   }
+
+      //   if (email2.length > 0) {
+      //     await transporter.sendMail({
+      //       from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+      //       to: itu.email2, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+      //       subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
+      //       html:
+      //         "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
+      //         process.env.PATH_CLIENT +
+      //         "admin/booking" +
+      //         "'>คลิก</a>", // html body
+      //     });
+      //   }
+
       res.status(200).json({ ...item, msg: "success" });
     } catch (error) {
       res.status(400).json({ msg: error.message });
@@ -490,6 +593,35 @@ const methods = {
           updated_by: "arnonr",
         },
       });
+
+      if (item.status_id == 2 || item.status_id == 3) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "sicckmutnb78", // email password
+          },
+        });
+        let text = {};
+        if (item.status_id == 2) {
+          text["subject"] = "การจองของท่านได้รับการอนุมัติ";
+        } else {
+          text["subject"] = "การจองของท่านได้รับการปฏิเสธ";
+        }
+
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: text.subject, // หัวข้ออีเมล
+          html:
+            "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> ดูรายละเอียดได้ที่ : <a href='" +
+            process.env.PATH_CLIENT +
+            "booking" +
+            "'>คลิก</a>", // html body
+        });
+      }
 
       res.status(200).json({ ...item, msg: "success" });
     } catch (error) {

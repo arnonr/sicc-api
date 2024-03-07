@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const nodemailer = require("nodemailer");
 
 // ค้นหา
 const filterData = (req) => {
@@ -253,6 +254,7 @@ const methods = {
           updated_by: "arnonr",
         },
       });
+
       res.status(200).json({ ...item, msg: "success" });
     } catch (error) {
       res.status(400).json({ msg: error.message });
