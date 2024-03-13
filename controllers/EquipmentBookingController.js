@@ -304,9 +304,14 @@ const methods = {
     //     },
     //   });
 
-      
+    //   await transporter.sendMail({
+    //     from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+    //     to: 'tongfreedom@gmail.com', // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+    //     subject:
+    //       "รายการเช็คค่าบริการ และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สสมรรถนะสูง", // หัวข้ออีเมล
 
-   
+    //     html: "<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css' rel='stylesheet'><div style='font-size: 1.4em;'>รายการเช็คค่าบริการ และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง (Scientific Instrument and High Performance Computing Center: SICC)</b><br><br>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูงขอขอบพระคุณเป็นอย่างสูง ที่ท่านให้ความไว้วางใจในการเช็คค่าบริการ <span class='fw-bold'>และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติของเรา </span>ขณะนี้เราได้รับรายการเช็คค่าบริการและประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากท่านเรียบร้อยแล้ว<br><br>ถ้าท่านมีความสนใจต้องการเข้ารับบริการ/จองคิว กรุณาติดต่อ<br><br>Tel : +66 2555 2000 Ext.4257<br><br>Email : sicc@sci.kmutnb.ac.th<br><br>Website : <a href='http://sci.kmutnb.ac.th/sicc/'>sicc.sci.kmutnb.ac.th</a><div>", // html body
+    //   });
 
       res.status(200).json({ data: item, msg: " success" });
     } catch (error) {
