@@ -363,34 +363,100 @@ const methods = {
         },
       });
 
+      let confirm_url =
+        process.env.PATH_CLIENT +
+        "confirm-email?id=" +
+        item.id +
+        "&email=" +
+        item.email +
+        "&secret_confirm_email=" +
+        item.secret_confirm_email;
+
       await transporter.sendMail({
         from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
         to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
         subject:
           "ยืนยันการสมัครสมาชิกกับศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง", // หัวข้ออีเมล
-        html:
-          "<div style='font-size: 1.4em;'><b>ยืนยันการสมัครสมาชิกกับศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง<br>(Scientific Instrument and Height Performance Computer Center: SICC)</b><br><br> ขอบคุณสำหรับการสมัครสมาชิกกับเว็บไซต์<br><br><a href='http://sci.kmutnb.ac.th/sicc/'>sicc.sci.kmutnb.ac.th</a><br><br>กรุณาคลิกที่ลิงค์ เพื่อยืนยันการเป็นสมาชิก<br><br>ลิงค์สำหรับ ยืนยัน<br><br><a href='" +
-          process.env.PATH_CLIENT +
-          "confirm-email?id=" +
-          item.id +
-          "&email=" +
-          item.email +
-          "&secret_confirm_email=" +
-          item.secret_confirm_email +
-          "'>" +
-          process.env.PATH_CLIENT +
-          "confirm-email?id=" +
-          item.id +
-          "&email=" +
-          item.email +
-          "&secret_confirm_email=" +
-          item.secret_confirm_email +
-          "</a>" +
-          "<br><br>อีเมล์ : " +
-          item.email +
-          "</div>", // html body
+
+        html: `<div
+          style="
+            font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
+            border-style: solid;
+            border-width: thin;
+            border-color: #dadce0;
+            border-radius: 8px;
+            padding: 40px 20px;
+          "
+        >
+          <div style="margin-bottom: 22px">
+            <img
+              src="http://sci.kmutnb.ac.th/sicc/_nuxt/logo-sicc.5cf857a5.png"
+              alt=""
+              style="width: 160px"
+              class="CToWUd"
+              data-bit="iit"
+            />
+          </div>
+          <div style="font-size: 20px; margin-bottom: 22px">
+            ยืนยันการสมัครสมาชิกกับศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง<br />(Scientific
+            Instrument and Height Performance Computer Center: SICC)
+          </div>
+          <div style="font-size: 20px; margin-bottom: 22px">
+            ขอบคุณสำหรับการสมัครสมาชิกกับเว็บไซต์
+          </div>
+          <div style="font-size: 20px; margin-bottom: 22px">
+            <div
+              style="
+                font-size: 20px;
+                margin-bottom: 22px;
+                border-width: 1px;
+                border-style: solid;
+                padding: 1em;
+                width: 300px;
+                border-color: #ffcb05;
+              "
+            >
+              <a href="http://sci.kmutnb.ac.th/sicc/">sicc.sci.kmutnb.ac.th</a>
+            </div>
+          </div>
+          <div style="font-size: 20px; margin-bottom: 22px">
+            กรุณาคลิกที่ลิงค์ เพื่อยืนยันการเป็นสมาชิก
+          </div>
+          <div style="font-size: 20px; margin-bottom: 22px">ลิงค์สำหรับ ยืนยัน</div>
+          <div
+            style="
+              font-size: 20px;
+              margin-bottom: 22px;
+              border-width: 1px;
+            "
+          >
+            <a
+              href="${confirm_url}"
+              style="
+                font-family: 'Google Sans', Roboto, RobotoDraft, Helvetica, Arial,
+                  sans-serif;
+                line-height: 16px;
+                color: #ffffff;
+                font-weight: 400;
+                text-decoration: none;
+                font-size: 14px;
+                display: inline-block;
+                padding: 10px 24px;
+                background-color: #4184f3;
+                border-radius: 5px;
+                min-width: 40px;
+              "
+              target="_blank"
+              >ยืนยัน</a
+            >
+          </div>
+          <div style="font-size: 20px; margin-bottom: 22px">อีเมล : ${item.email}</div>
+        
+          <div style="border-top: 1px solid #dadce0; margin: 20px 0 10px 0"></div>
+        </div>
+        `,
       });
-      
+
       res.status(201).json({ ...item, ...profile, msg: "success" });
     } catch (error) {
       res.status(400).json({ msg: error.message });

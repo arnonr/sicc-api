@@ -294,24 +294,15 @@ const methods = {
         },
       });
 
-    //   let transporter = nodemailer.createTransport({
-    //     host: "smtp.gmail.com",
-    //     port: 587,
-    //     secure: false,
-    //     auth: {
-    //       user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-    //       pass: "sicckmutnb78", // email password
-    //     },
-    //   });
-
-    //   await transporter.sendMail({
-    //     from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
-    //     to: 'tongfreedom@gmail.com', // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
-    //     subject:
-    //       "รายการเช็คค่าบริการ และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สสมรรถนะสูง", // หัวข้ออีเมล
-
-    //     html: "<link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css' rel='stylesheet'><div style='font-size: 1.4em;'>รายการเช็คค่าบริการ และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง (Scientific Instrument and High Performance Computing Center: SICC)</b><br><br>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูงขอขอบพระคุณเป็นอย่างสูง ที่ท่านให้ความไว้วางใจในการเช็คค่าบริการ <span class='fw-bold'>และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติของเรา </span>ขณะนี้เราได้รับรายการเช็คค่าบริการและประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากท่านเรียบร้อยแล้ว<br><br>ถ้าท่านมีความสนใจต้องการเข้ารับบริการ/จองคิว กรุณาติดต่อ<br><br>Tel : +66 2555 2000 Ext.4257<br><br>Email : sicc@sci.kmutnb.ac.th<br><br>Website : <a href='http://sci.kmutnb.ac.th/sicc/'>sicc.sci.kmutnb.ac.th</a><div>", // html body
-    //   });
+      //   let transporter = nodemailer.createTransport({
+      //     host: "smtp.gmail.com",
+      //     port: 587,
+      //     secure: false,
+      //     auth: {
+      //       user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+      //       pass: "sicckmutnb78", // email password
+      //     },
+      //   });
 
       res.status(200).json({ data: item, msg: " success" });
     } catch (error) {
@@ -404,35 +395,73 @@ const methods = {
         to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
         subject:
           "รายการเช็คค่าบริการ และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สสมรรถนะสูง", // หัวข้ออีเมล
-
-        html: "<div style='font-size: 1.4em;'>รายการเช็คค่าบริการ และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง (Scientific Instrument and High Performance Computing Center: SICC)</b><br><br>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูงขอขอบพระคุณเป็นอย่างสูง ที่ท่านให้ความไว้วางใจในการเช็คค่าบริการ และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติของเรา ขณะนี้เราได้รับรายการเช็คค่าบริการและประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากท่านเรียบร้อยแล้ว<br><br>ถ้าท่านมีความสนใจต้องการเข้ารับบริการ/จองคิว กรุณาติดต่อ<br><br>Tel : +66 2555 2000 Ext.4257<br><br>Email : sicc@sci.kmutnb.ac.th<br><br>Website : <a href='http://sci.kmutnb.ac.th/sicc/'>sicc.sci.kmutnb.ac.th</a><div>", // html body
+        html: `<div
+         style="
+           font-family: Roboto, RobotoDraft, Helvetica, Arial,
+             sans-serif;
+           border-style: solid;
+           border-width: thin;
+           border-color: #dadce0;
+           border-radius: 8px;
+           padding: 40px 20px;
+         "
+       >
+         <div style="margin-bottom: 22px">
+           <img
+             src="http://sci.kmutnb.ac.th/sicc/_nuxt/logo-sicc.5cf857a5.png"
+             alt=""
+             style="width: 160px"
+             class="CToWUd"
+             data-bit="iit"
+           />
+         </div>
+         <div style="font-size: 20px; margin-bottom: 22px; max-width: 800px">
+           ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูงขอขอบพระคุณเป็นอย่างสูง
+           ที่ท่านให้ความไว้วางใจในการเช็คค่าบริการ
+           และประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติของเรา
+           ขณะนี้เราได้รับรายการเช็คค่าบริการและประมาณค่าใช้จ่ายผ่านระบบอัตโนมัติจากท่านเรียบร้อยแล้ว
+         </div>
+         <div style="font-size: 20px; margin-bottom: 22px">
+           ถ้าท่านมีความสนใจต้องการเข้ารับบริการ/จองคิว กรุณาติดต่อ
+         </div>
+         <div style="font-size: 20px; margin-bottom: 22px">
+           Tel : +66 2555 2000 Ext.4257
+         </div>
+         <div style="font-size: 20px; margin-bottom: 22px">
+           Email : sicc@sci.kmutnb.ac.th
+         </div>
+         <div style="font-size: 20px; margin-bottom: 22px">
+           Website : <a href="http://sci.kmutnb.ac.th/sicc/">sicc.sci.kmutnb.ac.th</a>
+         </div>
+         <div style="border-top: 1px solid #dadce0; margin: 20px 0 10px 0"></div>
+       </div>`,
       });
 
-      //   if (email1.length > 0) {
-      //     await transporter.sendMail({
-      //       from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
-      //       to: email1, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
-      //       subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
-      //       html:
-      //         "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
-      //         process.env.PATH_CLIENT +
-      //         "admin/booking" +
-      //         "'>คลิก</a>", // html body
-      //     });
-      //   }
+      // if (email1.length > 0) {
+      //   await transporter.sendMail({
+      //     from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+      //     to: email1, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+      //     subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
+      //     html:
+      //       "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
+      //       process.env.PATH_CLIENT +
+      //       "admin/booking" +
+      //       "'>คลิก</a>", // html body
+      //   });
+      // }
 
-      //   if (email2.length > 0) {
-      //     await transporter.sendMail({
-      //       from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
-      //       to: email2, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
-      //       subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
-      //       html:
-      //         "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
-      //         process.env.PATH_CLIENT +
-      //         "admin/booking" +
-      //         "'>คลิก</a>", // html body
-      //     });
-      //   }
+      // if (email2.length > 0) {
+      //   await transporter.sendMail({
+      //     from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+      //     to: email2, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+      //     subject: "พบรายการจองใหม่ กรุณาตรวจสอบเพื่อทำการอนุมัติ", // หัวข้ออีเมล
+      //     html:
+      //       "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดพิจารณาการจอง : <a href='" +
+      //       process.env.PATH_CLIENT +
+      //       "admin/booking" +
+      //       "'>คลิก</a>", // html body
+      //   });
+      // }
 
       res.status(201).json({ ...item, msg: "success" });
     } catch (error) {
@@ -742,3 +771,283 @@ const methods = {
 };
 
 module.exports = { ...methods };
+
+/* <div>
+<table
+  style="
+    width: 1000px;
+    font-family: Roboto, RobotoDraft, Helvetica, Arial,
+      sans-serif;
+    border-style: solid;
+    border-width: thin;
+    border-color: #dadce0;
+    border-radius: 8px;
+    padding: 40px;
+    margin: auto;
+  "
+>
+  <tr>
+    <td colspan="2" style="text-align: right;padding-bottom: 1em;">
+      <span> เลขที่รายการสั่งซื้อ SICC-BO-${item.id} </span>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: right;padding-bottom: 2em;">
+        <span> วันที่ ${item.date} </span>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: center">
+      <h3 style="padding-bottom: 1em">รายการสั่งซื้อสินค้า</h3></span>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+        <table style="width: 500px; margin-right: 1em;">
+            <tr>
+              <td
+                colspan="2"
+                style="
+                  font-weight: bold;
+                  text-align: center;
+                  background-color: #ffcb05;
+                  border-radius: 0.5em;
+                  padding: 0.4em;
+                "
+              >
+                ชื่อผู้สั่ง/จัดส่งสินค้า
+              </td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;padding-top: 1em;">ชื่อ นามสกุล :</td>
+              <td style="font-style: italic;padding-top: 1em;">${
+                item.firstname + " " + item.surname
+              }</td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr style="border-color: #eee;border-style: dotted;" />
+                    </td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">บริษัท :</td>
+              <td style="font-style: italic;">
+              ${item.organization}
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr style="border-color: #eee;border-style: dotted;" />
+                    </td>
+            </tr>
+
+            <tr>
+              <td style="font-weight: bold;">ที่อยู่ :</td>
+              <td style="font-style: italic;">
+              ${item.contact_address}
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr style="border-color: #eee;border-style: dotted;" />
+                    </td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">จังหวัด :</td>
+              <td style="font-style: italic;">
+              ${item.contact_address}
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr style="border-color: #eee;border-style: dotted;" />
+                    </td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">รหัสไปรษณีย์ :</td>
+              <td style="font-style: italic;">
+              ${item.contact_address}
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr style="border-color: #eee;border-style: dotted;" />
+                    </td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">โทรศัพท์ :</td>
+              <td style="font-style: italic;">
+              ${item.phone}
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr style="border-color: #eee;border-style: dotted;" />
+                    </td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold;">โทรสาร :</td>
+              <td style="font-style: italic;">
+                02-555-2020
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <hr style="border-color: #eee;border-style: dotted;" />
+                    </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold;">อีเมล :</td>
+                <td style="font-style: italic;">
+                  arnon.r@tgde.kmutnb.ac.th
+                </td>
+              </tr>
+
+          </table>
+    </td>
+    <td style="border-left: 1px solid;">
+      <table style="width: 500px; margin-left: 1em;">
+        <tr>
+          <td
+            colspan="2"
+            style="
+              font-weight: bold;
+              text-align: center;
+              background-color: #ffcb05;
+              border-radius: 0.5em;
+              padding: 0.4em;
+            "
+          >
+            ชื่อออกใบกำกับภาษี
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;padding-top: 1em;">ชื่อ นามสกุล :</td>
+          <td style="font-style: italic;padding-top: 1em;">อานนท์ รักจักร์</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <hr style="border-color: #eee;border-style: dotted;" />
+                </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">บริษัท :</td>
+          <td style="font-style: italic;" >
+            มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <hr style="border-color: #eee;border-style: dotted;" />
+                </td>
+        </tr>
+
+        <tr>
+          <td style="font-weight: bold;">ที่อยู่ :</td>
+          <td style="font-style: italic;">
+            705 ซ.จรัญสนิทวงศ์ 89 แขวงบางอ้อ เขตบางพลัด
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <hr style="border-color: #eee;border-style: dotted;" />
+                </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">จังหวัด :</td>
+          <td style="font-style: italic;">
+            กรุงเทพมหานคร
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <hr style="border-color: #eee;border-style: dotted;" />
+                </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">รหัสไปรษณีย์ :</td>
+          <td style="font-style: italic;">
+            10700
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <hr style="border-color: #eee;border-style: dotted;" />
+                </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">โทรศัพท์ :</td>
+          <td style="font-style: italic;">
+            02-555-2000
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <hr style="border-color: #eee;border-style: dotted;" />
+                </td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold;">โทรสาร :</td>
+          <td style="font-style: italic;">
+            02-555-2020
+          </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            <hr style="border-color: #eee;border-style: dotted;" />
+                </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">อีเมล :</td>
+            <td style="font-style: italic;">
+              arnon.r@tgde.kmutnb.ac.th
+            </td>
+          </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="text-align: left;padding-top: 2em;">
+
+      <hr>
+        <div style="margin-top: 1em;"><span  style="font-weight: bold;">เครื่องมือ/Scientific Instrument : </span><span style="font-weight: bold;color:#ffcb05;font-style: italic;">นิวเคลียร์แมกเนติกเรโซแนนซ์สเปกโตรมิเตอร์ </span></div>
+        <div style="margin-top: 1em;"><span  style="font-weight: bold;">วันที่จอง/Booking Date : </span><span style="font-weight: bold;color:#ffcb05;font-style: italic;">16 มี.ค. 2567 </span></div>
+        <div style="margin-top: 1em;"><span  style="font-weight: bold;">ข้อมูลตัวอย่าง/Example : </span><span style="font-weight: bold;color:#ffcb05;font-style: italic;">TEST </span></div>
+        </td>
+        </tr>
+
+  <tr>
+    <td colspan="2" style="text-align: center;padding-top: 2em;">
+      <table style="width:100%;border-style:solid;border-width:1px; border-collapse: collapse">
+        <tr>
+          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">ลําดับ</th>
+          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">รายการวิเคราะห์</th>
+          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">จำนวน</th>
+          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">ราคา</th>
+        </tr>
+        <tr>
+          <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">1</td>
+          <td style="border-style:solid;border-width:1px;padding:0.4em;">Scanning Electron Microscope SEM</td>
+          <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">1 ชั่วโมง</td>
+          <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">450.00</td>
+        </tr>
+        <tr>
+            <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">2</td>
+            <td style="border-style:solid;border-width:1px;padding:0.4em;">Scanning Electron Microscope SEM</td>
+            <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">1 ชั่วโมง</td>
+            <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">450.00</td>
+          </tr>
+
+          <tr>
+            <td colspan="3" style="border-style:solid;border-width:1px;text-align: right;padding:0.4em;font-weight: bold;">รวม</td>
+            <td style="border-style:solid;border-width:1px;padding:0.4em;text-align: center;">900.00</td>
+          </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+</div> */
