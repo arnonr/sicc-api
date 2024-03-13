@@ -367,9 +367,9 @@ const methods = {
         from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
         to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
         subject:
-          "ยืนยันการสมัครสมาชิก ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // หัวข้ออีเมล
+          "ยืนยันการสมัครสมาชิกกับศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง", // หัวข้ออีเมล
         html:
-          "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดยืนยันการสมัครสมาชิก : <a href='" +
+          "<div style='font-size: 1.4em;'><b>ยืนยันการสมัครสมาชิกกับศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง<br>(Scientific Instrument and Height Performance Computer Center: SICC)</b><br><br> ขอบคุณสำหรับการสมัครสมาชิกกับเว็บไซต์<br><br><a href='http://sci.kmutnb.ac.th/sicc/'>sicc.sci.kmutnb.ac.th</a><br><br>กรุณาคลิกที่ลิงค์ เพื่อยืนยันการเป็นสมาชิก<br><br>ลิงค์สำหรับ ยืนยัน<br><br><a href='" +
           process.env.PATH_CLIENT +
           "confirm-email?id=" +
           item.id +
@@ -377,9 +377,20 @@ const methods = {
           item.email +
           "&secret_confirm_email=" +
           item.secret_confirm_email +
-          "'>คลิก</a>", // html body
+          "'>" +
+          process.env.PATH_CLIENT +
+          "confirm-email?id=" +
+          item.id +
+          "&email=" +
+          item.email +
+          "&secret_confirm_email=" +
+          item.secret_confirm_email +
+          "</a>" +
+          "<br><br>อีเมล์ : " +
+          item.email +
+          "</div>", // html body
       });
-
+      
       res.status(201).json({ ...item, ...profile, msg: "success" });
     } catch (error) {
       res.status(400).json({ msg: error.message });
