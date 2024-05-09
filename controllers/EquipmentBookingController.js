@@ -110,6 +110,7 @@ const countDataAndOrder = async (req, $where) => {
 const selectField = {
   id: true,
   user_id: true,
+  code: true,
   equipment_id: true,
   booking_date: true,
   example: true,

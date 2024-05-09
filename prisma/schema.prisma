@@ -1,370 +1,385 @@
-// This is your Prisma schema file,
-// learn more contact it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
 model news_type {
-    id         Int       @id @default(autoincrement())
-    name_th    String    @db.VarChar(500)
-    name_en    String?   @db.VarChar(500)
-    is_active  Int       @default(1)
-    is_publish Int       @default(1)
-    created_at DateTime? @default(now()) @db.DateTime(0)
-    created_by String?   @db.VarChar(255)
-    updated_at DateTime? @updatedAt
-    updated_by String?   @db.VarChar(255)
-    deleted_at DateTime?
-    news       news[]
+  id         Int       @id @default(autoincrement())
+  name_th    String    @db.VarChar(500)
+  name_en    String?   @db.VarChar(500)
+  is_active  Int       @default(1)
+  is_publish Int       @default(1)
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  created_by String?   @db.VarChar(255)
+  updated_at DateTime? @updatedAt
+  updated_by String?   @db.VarChar(255)
+  deleted_at DateTime?
+  news       news[]
 }
 
 model news {
-    id           Int       @id @default(autoincrement())
-    news_type    news_type @relation(fields: [news_type_id], references: [id])
-    news_type_id Int
-    title_th     String    @db.VarChar(500)
-    title_en     String?   @db.VarChar(500)
-    detail_th    String?   @db.LongText
-    detail_en    String?   @db.LongText
-    news_file    String?   @db.VarChar(500)
-    is_active    Int       @default(1)
-    is_publish   Int       @default(1)
-    count_views  Int       @default(0)
-    created_news DateTime  @db.Date
-    created_at   DateTime? @default(now()) @db.DateTime(0)
-    created_by   String?   @db.VarChar(255)
-    updated_at   DateTime? @updatedAt
-    updated_by   String?   @db.VarChar(255)
-    deleted_at   DateTime?
+  id           Int       @id @default(autoincrement())
+  news_type_id Int
+  title_th     String    @db.VarChar(500)
+  title_en     String?   @db.VarChar(500)
+  detail_th    String?   @db.LongText
+  detail_en    String?   @db.LongText
+  news_file    String?   @db.VarChar(500)
+  is_active    Int       @default(1)
+  is_publish   Int       @default(1)
+  count_views  Int       @default(0)
+  created_news DateTime  @db.Date
+  created_at   DateTime? @default(now()) @db.DateTime(0)
+  created_by   String?   @db.VarChar(255)
+  updated_at   DateTime? @updatedAt
+  updated_by   String?   @db.VarChar(255)
+  deleted_at   DateTime?
+  news_type    news_type @relation(fields: [news_type_id], references: [id])
+
+  @@index([news_type_id], map: "news_news_type_id_fkey")
 }
 
 model banner {
-    id             Int       @id @default(autoincrement())
-    title_th       String    @db.VarChar(500)
-    title_en       String?   @db.VarChar(500)
-    banner_file    String?   @db.VarChar(500)
-    banner_url     String?   @db.VarChar(500)
-    is_active      Int       @default(1)
-    is_publish     Int       @default(1)
-    count_views    Int       @default(0)
-    created_banner DateTime  @db.Date
-    created_at     DateTime? @default(now()) @db.DateTime(0)
-    created_by     String?   @db.VarChar(255)
-    updated_at     DateTime? @updatedAt
-    updated_by     String?   @db.VarChar(255)
-    deleted_at     DateTime?
+  id             Int       @id @default(autoincrement())
+  title_th       String    @db.VarChar(500)
+  title_en       String?   @db.VarChar(500)
+  banner_file    String?   @db.VarChar(500)
+  banner_url     String?   @db.VarChar(500)
+  is_active      Int       @default(1)
+  is_publish     Int       @default(1)
+  count_views    Int       @default(0)
+  created_banner DateTime  @db.Date
+  created_at     DateTime? @default(now()) @db.DateTime(0)
+  created_by     String?   @db.VarChar(255)
+  updated_at     DateTime? @updatedAt
+  updated_by     String?   @db.VarChar(255)
+  deleted_at     DateTime?
 }
 
 model about {
-    id            Int       @id @default(autoincrement())
-    title_th      String    @db.VarChar(500)
-    title_en      String?   @db.VarChar(500)
-    detail_th     String?   @db.LongText
-    detail_en     String?   @db.LongText
-    is_active     Int       @default(1)
-    is_publish    Int       @default(1)
-    count_views   Int       @default(0)
-    created_about DateTime  @db.Date
-    created_at    DateTime? @default(now()) @db.DateTime(0)
-    created_by    String?   @db.VarChar(255)
-    updated_at    DateTime? @updatedAt
-    updated_by    String?   @db.VarChar(255)
-    deleted_at    DateTime?
+  id            Int       @id @default(autoincrement())
+  title_th      String    @db.VarChar(500)
+  title_en      String?   @db.VarChar(500)
+  detail_th     String?   @db.LongText
+  detail_en     String?   @db.LongText
+  is_active     Int       @default(1)
+  is_publish    Int       @default(1)
+  count_views   Int       @default(0)
+  created_about DateTime  @db.Date
+  created_at    DateTime? @default(now()) @db.DateTime(0)
+  created_by    String?   @db.VarChar(255)
+  updated_at    DateTime? @updatedAt
+  updated_by    String?   @db.VarChar(255)
+  deleted_at    DateTime?
 }
 
 model contact {
-    id              Int       @id @default(autoincrement())
-    title_th        String    @db.VarChar(500)
-    title_en        String?   @db.VarChar(500)
-    detail_th       String?   @db.LongText
-    detail_en       String?   @db.LongText
-    is_active       Int       @default(1)
-    is_publish      Int       @default(1)
-    count_views     Int       @default(0)
-    created_contact DateTime  @db.Date
-    created_at      DateTime? @default(now()) @db.DateTime(0)
-    created_by      String?   @db.VarChar(255)
-    updated_at      DateTime? @updatedAt
-    updated_by      String?   @db.VarChar(255)
-    deleted_at      DateTime?
+  id              Int       @id @default(autoincrement())
+  title_th        String    @db.VarChar(500)
+  title_en        String?   @db.VarChar(500)
+  detail_th       String?   @db.LongText
+  detail_en       String?   @db.LongText
+  is_active       Int       @default(1)
+  is_publish      Int       @default(1)
+  count_views     Int       @default(0)
+  created_contact DateTime  @db.Date
+  created_at      DateTime? @default(now()) @db.DateTime(0)
+  created_by      String?   @db.VarChar(255)
+  updated_at      DateTime? @updatedAt
+  updated_by      String?   @db.VarChar(255)
+  deleted_at      DateTime?
 }
 
 model department {
-    id         Int       @id @default(autoincrement())
-    name_th    String    @db.VarChar(500)
-    name_en    String?   @db.VarChar(500)
-    level      Int
-    is_active  Int       @default(1)
-    is_publish Int       @default(1)
-    created_at DateTime? @default(now()) @db.DateTime(0)
-    created_by String?   @db.VarChar(255)
-    updated_at DateTime? @updatedAt
-    updated_by String?   @db.VarChar(255)
-    deleted_at DateTime?
-    team       team[]
+  id         Int       @id @default(autoincrement())
+  name_th    String    @db.VarChar(500)
+  name_en    String?   @db.VarChar(500)
+  level      Int
+  is_active  Int       @default(1)
+  is_publish Int       @default(1)
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  created_by String?   @db.VarChar(255)
+  updated_at DateTime? @updatedAt
+  updated_by String?   @db.VarChar(255)
+  deleted_at DateTime?
+  team       team[]
 }
 
 model team {
-    id                Int        @id @default(autoincrement())
-    department        department @relation(fields: [department_id], references: [id])
-    department_id     Int
-    prefix_th         String?    @db.VarChar(500)
-    prefix_en         String?    @db.VarChar(500)
-    firstname_th      String?    @db.VarChar(500)
-    firstname_en      String?    @db.VarChar(500)
-    surname_th        String?    @db.VarChar(500)
-    surname_en        String?    @db.VarChar(500)
-    position_th       String?    @db.VarChar(500)
-    position_en       String?    @db.VarChar(500)
-    position_level_th String?    @db.VarChar(500)
-    position_level_en String?    @db.VarChar(500)
-    phone             String     @db.VarChar(50)
-    email             String     @db.VarChar(255)
-    level             Int?
-    team_file         String?    @db.VarChar(500)
-    is_active         Int        @default(1)
-    is_publish        Int        @default(1)
-    created_at        DateTime?  @default(now()) @db.DateTime(0)
-    created_by        String?    @db.VarChar(255)
-    updated_at        DateTime?  @updatedAt
-    updated_by        String?    @db.VarChar(255)
-    deleted_at        DateTime?
+  id                Int        @id @default(autoincrement())
+  department_id     Int
+  prefix_th         String?    @db.VarChar(500)
+  prefix_en         String?    @db.VarChar(500)
+  firstname_th      String?    @db.VarChar(500)
+  firstname_en      String?    @db.VarChar(500)
+  surname_th        String?    @db.VarChar(500)
+  surname_en        String?    @db.VarChar(500)
+  position_th       String?    @db.VarChar(500)
+  position_en       String?    @db.VarChar(500)
+  position_level_th String?    @db.VarChar(500)
+  position_level_en String?    @db.VarChar(500)
+  phone             String     @db.VarChar(50)
+  email             String     @db.VarChar(255)
+  level             Int?
+  team_file         String?    @db.VarChar(500)
+  is_active         Int        @default(1)
+  is_publish        Int        @default(1)
+  created_at        DateTime?  @default(now()) @db.DateTime(0)
+  created_by        String?    @db.VarChar(255)
+  updated_at        DateTime?  @updatedAt
+  updated_by        String?    @db.VarChar(255)
+  deleted_at        DateTime?
+  department        department @relation(fields: [department_id], references: [id])
+
+  @@index([department_id], map: "team_department_id_fkey")
 }
 
 model news_gallery {
-    id                Int       @id @default(autoincrement())
-    news_id           Int?
-    secret_key        String    @db.VarChar(255)
-    news_gallery_file String    @db.VarChar(500)
-    is_active         Int       @default(1)
-    is_publish        Int       @default(1)
-    created_at        DateTime? @default(now()) @db.DateTime(0)
-    created_by        String    @db.VarChar(255)
-    updated_at        DateTime? @updatedAt
-    updated_by        String?   @db.VarChar(255)
-    deleted_at        DateTime?
+  id                Int       @id @default(autoincrement())
+  news_id           Int?
+  secret_key        String    @db.VarChar(255)
+  news_gallery_file String    @db.VarChar(500)
+  is_active         Int       @default(1)
+  is_publish        Int       @default(1)
+  created_at        DateTime? @default(now()) @db.DateTime(0)
+  created_by        String    @db.VarChar(255)
+  updated_at        DateTime? @updatedAt
+  updated_by        String?   @db.VarChar(255)
+  deleted_at        DateTime?
 }
 
 model equipment_department {
-    id         Int         @id @default(autoincrement())
-    name_th    String?     @db.VarChar(500)
-    name_en    String?     @db.VarChar(500)
-    name_short String?     @db.VarChar(500)
-    is_active  Int         @default(1)
-    is_publish Int         @default(1)
-    created_at DateTime?   @default(now()) @db.DateTime(0)
-    created_by String?     @db.VarChar(255)
-    updated_at DateTime?   @updatedAt
-    updated_by String?     @db.VarChar(255)
-    deleted_at DateTime?
-    equipments equipment[]
+  id         Int         @id @default(autoincrement())
+  name_th    String?     @db.VarChar(500)
+  name_en    String?     @db.VarChar(500)
+  name_short String?     @db.VarChar(500)
+  is_active  Int         @default(1)
+  is_publish Int         @default(1)
+  created_at DateTime?   @default(now()) @db.DateTime(0)
+  created_by String?     @db.VarChar(255)
+  updated_at DateTime?   @updatedAt
+  updated_by String?     @db.VarChar(255)
+  deleted_at DateTime?
+  equipments equipment[]
 }
 
 model equipment_category {
-    id         Int         @id @default(autoincrement())
-    name_th    String      @db.VarChar(500)
-    name_en    String?     @db.VarChar(500)
-    name_short String?     @db.VarChar(500)
-    is_active  Int         @default(1)
-    is_publish Int         @default(1)
-    created_at DateTime?   @default(now()) @db.DateTime(0)
-    created_by String?     @db.VarChar(255)
-    updated_at DateTime?   @updatedAt
-    updated_by String?     @db.VarChar(255)
-    deleted_at DateTime?
-    equipments equipment[]
+  id         Int         @id @default(autoincrement())
+  name_th    String      @db.VarChar(500)
+  name_en    String?     @db.VarChar(500)
+  name_short String?     @db.VarChar(500)
+  is_active  Int         @default(1)
+  is_publish Int         @default(1)
+  created_at DateTime?   @default(now()) @db.DateTime(0)
+  created_by String?     @db.VarChar(255)
+  updated_at DateTime?   @updatedAt
+  updated_by String?     @db.VarChar(255)
+  deleted_at DateTime?
+  equipments equipment[]
 }
 
 model equipment {
-    id                      Int                  @id @default(autoincrement())
-    equipment_category      equipment_category   @relation(fields: [equipment_category_id], references: [id])
-    equipment_category_id   Int
-    equipment_department    equipment_department @relation(fields: [equipment_department_id], references: [id])
-    equipment_department_id Int
-    title_th                String               @db.VarChar(500)
-    title_en                String?              @db.VarChar(500)
-    detail_th               String?              @db.LongText
-    detail_en               String?              @db.LongText
-    equipment_file          String?              @db.VarChar(500)
-    rate_file               String?              @db.VarChar(500)
-    is_active               Int                  @default(1)
-    is_publish              Int                  @default(1)
-    count_views             Int                  @default(0)
-    created_equipment       DateTime             @db.Date
-    created_at              DateTime?            @default(now()) @db.DateTime(0)
-    created_by              String?              @db.VarChar(255)
-    updated_at              DateTime?            @updatedAt
-    updated_by              String?              @db.VarChar(255)
-    deleted_at              DateTime?
-    equipment_method        equipment_method[]
-    equipment_booking       equipment_booking[]
+  id                      Int                  @id @default(autoincrement())
+  equipment_category_id   Int
+  equipment_department_id Int
+  title_th                String               @db.VarChar(500)
+  title_en                String?              @db.VarChar(500)
+  detail_th               String?              @db.LongText
+  detail_en               String?              @db.LongText
+  equipment_file          String?              @db.VarChar(500)
+  rate_file               String?              @db.VarChar(500)
+  is_active               Int                  @default(1)
+  is_publish              Int                  @default(1)
+  count_views             Int                  @default(0)
+  created_equipment       DateTime             @db.Date
+  created_at              DateTime?            @default(now()) @db.DateTime(0)
+  created_by              String?              @db.VarChar(255)
+  updated_at              DateTime?            @updatedAt
+  updated_by              String?              @db.VarChar(255)
+  deleted_at              DateTime?
+  equipment_category      equipment_category   @relation(fields: [equipment_category_id], references: [id])
+  equipment_department    equipment_department @relation(fields: [equipment_department_id], references: [id])
+  equipment_booking       equipment_booking[]
+  equipment_method        equipment_method[]
+
+  @@index([equipment_category_id], map: "equipment_equipment_category_id_fkey")
+  @@index([equipment_department_id], map: "equipment_equipment_department_id_fkey")
 }
 
 model equipment_gallery {
-    id                     Int       @id @default(autoincrement())
-    equipment_id           Int?
-    secret_key             String    @db.VarChar(255)
-    equipment_gallery_file String    @db.VarChar(500)
-    is_active              Int       @default(1)
-    is_publish             Int       @default(1)
-    created_at             DateTime? @default(now()) @db.DateTime(0)
-    created_by             String    @db.VarChar(255)
-    updated_at             DateTime? @updatedAt
-    updated_by             String?   @db.VarChar(255)
-    deleted_at             DateTime?
+  id                     Int       @id @default(autoincrement())
+  equipment_id           Int?
+  secret_key             String    @db.VarChar(255)
+  equipment_gallery_file String    @db.VarChar(500)
+  is_active              Int       @default(1)
+  is_publish             Int       @default(1)
+  created_at             DateTime? @default(now()) @db.DateTime(0)
+  created_by             String    @db.VarChar(255)
+  updated_at             DateTime? @updatedAt
+  updated_by             String?   @db.VarChar(255)
+  deleted_at             DateTime?
 }
 
 model equipment_method {
-    id                       Int                        @id @default(autoincrement())
-    name_th                  String                     @db.VarChar(500)
-    name_en                  String?                    @db.VarChar(500)
-    name_short               String?                    @db.VarChar(500)
-    unit_th                  String?                    @db.VarChar(500)
-    unit_en                  String?                    @db.VarChar(500)
-    price                    Int?
-    is_fixrate               Int?
-    is_active                Int                        @default(1)
-    is_publish               Int                        @default(1)
-    created_at               DateTime?                  @default(now()) @db.DateTime(0)
-    created_by               String?                    @db.VarChar(255)
-    updated_at               DateTime?                  @updatedAt
-    updated_by               String?                    @db.VarChar(255)
-    deleted_at               DateTime?
-    equipment                equipment                  @relation(fields: [equipment_id], references: [id])
-    equipment_id             Int
-    equipment_booking_method equipment_booking_method[]
+  id                       Int                        @id @default(autoincrement())
+  name_th                  String                     @db.VarChar(500)
+  name_en                  String?                    @db.VarChar(500)
+  name_short               String?                    @db.VarChar(500)
+  is_active                Int                        @default(1)
+  is_publish               Int                        @default(1)
+  created_at               DateTime?                  @default(now()) @db.DateTime(0)
+  created_by               String?                    @db.VarChar(255)
+  updated_at               DateTime?                  @updatedAt
+  updated_by               String?                    @db.VarChar(255)
+  deleted_at               DateTime?
+  equipment_id             Int
+  is_fixrate               Int?
+  unit_en                  String?                    @db.VarChar(500)
+  unit_th                  String?                    @db.VarChar(500)
+  price                    Int?
+  equipment_booking_method equipment_booking_method[]
+  equipment                equipment                  @relation(fields: [equipment_id], references: [id])
+
+  @@index([equipment_id], map: "equipment_method_equipment_id_fkey")
 }
 
 model group {
-    id         Int       @id @default(autoincrement())
-    title_th   String    @db.VarChar(500)
-    title_en   String?   @db.VarChar(500)
-    is_active  Int       @default(1)
-    is_publish Int       @default(1)
-    created_at DateTime? @default(now()) @db.DateTime(0)
-    created_by String?   @db.VarChar(255)
-    updated_at DateTime? @updatedAt
-    updated_by String?   @db.VarChar(255)
-    deleted_at DateTime?
-    users      user[]
+  id         Int       @id @default(autoincrement())
+  title_th   String    @db.VarChar(500)
+  title_en   String?   @db.VarChar(500)
+  is_active  Int       @default(1)
+  is_publish Int       @default(1)
+  created_at DateTime? @default(now()) @db.DateTime(0)
+  created_by String?   @db.VarChar(255)
+  updated_at DateTime? @updatedAt
+  updated_by String?   @db.VarChar(255)
+  deleted_at DateTime?
+  users      user[]
 }
 
 model user {
-    id                   Int                 @id @default(autoincrement())
-    group                group               @relation(fields: [group_id], references: [id])
-    group_id             Int
-    profile              profile?
-    email                String              @db.VarChar(500)
-    secret_confirm_email String?             @db.VarChar(500)
-    password             String?             @db.VarChar(500)
-    status               Int                 @default(1)
-    is_active            Int                 @default(1)
-    is_publish           Int                 @default(1)
-    created_at           DateTime?           @default(now()) @db.DateTime(0)
-    created_by           String?             @db.VarChar(255)
-    updated_at           DateTime?           @updatedAt
-    updated_by           String?             @db.VarChar(255)
-    deleted_at           DateTime?
-    equipment_booking    equipment_booking[]
+  id                   Int                 @id @default(autoincrement())
+  group_id             Int
+  email                String              @db.VarChar(500)
+  password             String?             @db.VarChar(500)
+  status               Int                 @default(1)
+  is_active            Int                 @default(1)
+  is_publish           Int                 @default(1)
+  created_at           DateTime?           @default(now()) @db.DateTime(0)
+  created_by           String?             @db.VarChar(255)
+  updated_at           DateTime?           @updatedAt
+  updated_by           String?             @db.VarChar(255)
+  deleted_at           DateTime?
+  secret_confirm_email String?             @db.VarChar(500)
+  equipment_booking    equipment_booking[]
+  profile              profile?
+  group                group               @relation(fields: [group_id], references: [id])
+
+  @@index([group_id], map: "user_group_id_fkey")
 }
 
 model profile {
-    id              Int       @id @default(autoincrement())
-    user            user      @relation(fields: [user_id], references: [id])
-    user_id         Int       @unique // relation scalar field (used in the `@relation` attribute above)
-    prefix          String?   @db.VarChar(500)
-    firstname       String?   @db.VarChar(500)
-    surname         String?   @db.VarChar(500)
-    member_status   Int
-    organization    String?   @db.VarChar(500)
-    contact_address String?   @db.LongText
-    phone           String?   @db.VarChar(500)
-    phone2          String?   @db.VarChar(500)
-    district_code   Int?
-    email           String?   @db.VarChar(500)
-    invoice_name    String?   @db.VarChar(500)
-    invoice_address String?   @db.LongText
-    tax_id          String?   @db.VarChar(500)
-    is_active       Int       @default(1)
-    is_publish      Int       @default(1)
-    created_at      DateTime? @default(now()) @db.DateTime(0)
-    created_by      String?   @db.VarChar(255)
-    updated_at      DateTime? @updatedAt
-    updated_by      String?   @db.VarChar(255)
-    deleted_at      DateTime?
+  id              Int       @id @default(autoincrement())
+  user_id         Int       @unique
+  prefix          String?   @db.VarChar(500)
+  firstname       String?   @db.VarChar(500)
+  surname         String?   @db.VarChar(500)
+  is_active       Int       @default(1)
+  is_publish      Int       @default(1)
+  created_at      DateTime? @default(now()) @db.DateTime(0)
+  created_by      String?   @db.VarChar(255)
+  updated_at      DateTime? @updatedAt
+  updated_by      String?   @db.VarChar(255)
+  deleted_at      DateTime?
+  contact_address String?   @db.LongText
+  email           String?   @db.VarChar(500)
+  invoice_address String?   @db.LongText
+  member_status   Int
+  organization    String?   @db.VarChar(500)
+  phone           String?   @db.VarChar(500)
+  tax_id          String?   @db.VarChar(500)
+  invoice_name    String?   @db.VarChar(500)
+  district_code   Int?
+  phone2          String?   @db.VarChar(500)
+  user            user      @relation(fields: [user_id], references: [id])
 }
 
 model equipment_booking {
-    id                       Int                        @id @default(autoincrement())
-    user                     user                       @relation(fields: [user_id], references: [id])
-    user_id                  Int
-    equipment                equipment                  @relation(fields: [equipment_id], references: [id])
-    equipment_id             Int
-    booking_date             DateTime                   @db.Date
-    period_time              Int
-    member_status            Int
-    example                  String?                    @db.LongText
-    prefix                   String?                    @db.VarChar(500)
-    firstname                String?                    @db.VarChar(500)
-    surname                  String?                    @db.VarChar(500)
-    organization             String?                    @db.VarChar(500)
-    contact_address          String?                    @db.LongText
-    phone                    String?                    @db.VarChar(500)
-    phone2                   String?                    @db.VarChar(500)
-    email                    String?                    @db.VarChar(500)
-    invoice_address          String?                    @db.LongText
-    tax_id                   String?                    @db.VarChar(500)
-    district_code            Int?
-    price                    Int?
-    reject_comment           String?                    @db.LongText
-    confirmed_date           DateTime?
-    status_id                Int                        @default(1)
-    is_active                Int                        @default(1)
-    is_publish               Int                        @default(1)
-    created_at               DateTime?                  @default(now()) @db.DateTime(0)
-    created_by               String?                    @db.VarChar(255)
-    updated_at               DateTime?                  @updatedAt
-    updated_by               String?                    @db.VarChar(255)
-    deleted_at               DateTime?
-    equipment_booking_method equipment_booking_method[]
+  id                       Int                        @id @default(autoincrement())
+  user_id                  Int
+  equipment_id             Int
+  booking_date             DateTime                   @db.Date
+  example                  String?                    @db.LongText
+  prefix                   String?                    @db.VarChar(500)
+  firstname                String?                    @db.VarChar(500)
+  surname                  String?                    @db.VarChar(500)
+  organization             String?                    @db.VarChar(500)
+  contact_address          String?                    @db.LongText
+  phone                    String?                    @db.VarChar(500)
+  email                    String?                    @db.VarChar(500)
+  invoice_address          String?                    @db.LongText
+  tax_id                   String?                    @db.VarChar(500)
+  price                    Int?
+  reject_comment           String?                    @db.LongText
+  confirmed_date           DateTime?
+  status_id                Int                        @default(1)
+  is_active                Int                        @default(1)
+  is_publish               Int                        @default(1)
+  created_at               DateTime?                  @default(now()) @db.DateTime(0)
+  created_by               String?                    @db.VarChar(255)
+  updated_at               DateTime?                  @updatedAt
+  updated_by               String?                    @db.VarChar(255)
+  deleted_at               DateTime?
+  member_status            Int
+  period_time              Int
+  district_code            Int?
+  phone2                   String?                    @db.VarChar(500)
+  code                     Int?
+  equipment                equipment                  @relation(fields: [equipment_id], references: [id])
+  user                     user                       @relation(fields: [user_id], references: [id])
+  equipment_booking_method equipment_booking_method[]
+
+  @@index([equipment_id], map: "equipment_booking_equipment_id_fkey")
+  @@index([user_id], map: "equipment_booking_user_id_fkey")
 }
 
 model equipment_booking_method {
-    id                   Int               @id @default(autoincrement())
-    equipment_booking_id Int
-    equipment_booking    equipment_booking @relation(fields: [equipment_booking_id], references: [id])
-    equipment_method_id  Int
-    equipment_method     equipment_method  @relation(fields: [equipment_method_id], references: [id])
-    quantity             Int?
-    price                Int?
-    is_active            Int               @default(1)
-    is_publish           Int               @default(1)
-    created_at           DateTime?         @default(now()) @db.DateTime(0)
-    created_by           String?           @db.VarChar(255)
-    updated_at           DateTime?         @updatedAt
-    updated_by           String?           @db.VarChar(255)
-    deleted_at           DateTime?
+  id                   Int               @id @default(autoincrement())
+  equipment_booking_id Int
+  equipment_method_id  Int
+  quantity             Int?
+  price                Int?
+  is_active            Int               @default(1)
+  is_publish           Int               @default(1)
+  created_at           DateTime?         @default(now()) @db.DateTime(0)
+  created_by           String?           @db.VarChar(255)
+  updated_at           DateTime?         @updatedAt
+  updated_by           String?           @db.VarChar(255)
+  deleted_at           DateTime?
+  equipment_booking    equipment_booking @relation(fields: [equipment_booking_id], references: [id])
+  equipment_method     equipment_method  @relation(fields: [equipment_method_id], references: [id])
+
+  @@index([equipment_booking_id], map: "equipment_booking_method_equipment_booking_id_fkey")
+  @@index([equipment_method_id], map: "equipment_booking_method_equipment_method_id_fkey")
 }
 
 model direction {
-    id              Int       @id @default(autoincrement())
-    title_th        String    @db.VarChar(500)
-    title_en        String?   @db.VarChar(500)
-    detail_th       String?   @db.LongText
-    detail_en       String?   @db.LongText
-    is_active       Int       @default(1)
-    is_publish      Int       @default(1)
-    count_views     Int       @default(0)
-    created_contact DateTime  @db.Date
-    created_at      DateTime? @default(now()) @db.DateTime(0)
-    created_by      String?   @db.VarChar(255)
-    updated_at      DateTime? @updatedAt
-    updated_by      String?   @db.VarChar(255)
-    deleted_at      DateTime?
+  id              Int       @id @default(autoincrement())
+  title_th        String    @db.VarChar(500)
+  title_en        String?   @db.VarChar(500)
+  detail_th       String?   @db.LongText
+  detail_en       String?   @db.LongText
+  is_active       Int       @default(1)
+  is_publish      Int       @default(1)
+  count_views     Int       @default(0)
+  created_contact DateTime  @db.Date
+  created_at      DateTime? @default(now()) @db.DateTime(0)
+  created_by      String?   @db.VarChar(255)
+  updated_at      DateTime? @updatedAt
+  updated_by      String?   @db.VarChar(255)
+  deleted_at      DateTime?
 }
