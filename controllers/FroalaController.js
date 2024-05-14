@@ -97,6 +97,46 @@ const methods = {
       res.status(400).json({ msg: error.message });
     }
   },
+
+  async onUploadReportUppy(req, res) {
+    try {
+      let table_name = req.body.table_name;
+
+      let pathFile = await uploadController.onUploadFile(
+        req,
+        "/uppy/report/",
+        "file"
+      );
+
+      if (pathFile == "error") {
+        res.status(500).send("error");
+      } else {
+        let data = {};
+        data[table_name + "_id"] =
+          req.body[table_name + "_id"] != "null"
+            ? Number(req.body[table_name + "_id"])
+            : null;
+        data["report_file"] = pathFile;
+        data["secret_key"] = req.body.secret_key;
+        data["is_publish"] = 1;
+        data["created_by"] = "arnonr";
+        data["updated_by"] = "arnonr";
+
+        const item = await prisma["report"].create({
+          data: data,
+        });
+
+        let return_json = {};
+        return_json["message"] = "success";
+        return_json["link"] = pathFile;
+        return_json[table_name + "_id"] = item[table_name + "_id"];
+        return_json["id"] = item.id;
+        res.status(201).json(return_json);
+      }
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
+  },
 };
 
 module.exports = { ...methods };

@@ -21,6 +21,7 @@ const equipmentGallery = require("./api/equipment-gallery");
 const equipment = require("./api/equipment");
 const equipmentMethod = require("./api/equipment-method");
 const booking = require("./api/booking");
+const report = require("./api/report");
 
 const router = express.Router();
 
@@ -47,6 +48,7 @@ router.use(
   router.use("/equipment", equipment),
   router.use("/equipment-method", equipmentMethod),
   router.use("/booking", booking),
+  router.use("/report", report),
 );
 
 module.exports = router;

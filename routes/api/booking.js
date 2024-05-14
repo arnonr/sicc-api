@@ -10,6 +10,18 @@ router.get("/check-booking-date", controllers.onCheckBookingDate);
 router.get("/:id", controllers.onGetById);
 
 router.post(
+  "/update-status/:id",
+  // auth.required,
+  controllers.onUpdateStatus
+);
+
+router.post(
+  "/upload-slip/:id",
+  // auth.required,
+  controllers.onUploadSlip
+);
+
+router.post(
   "/",
   // auth.required,
   controllers.onCreate
@@ -25,6 +37,12 @@ router.put(
   "/:id",
   // auth.required,
   controllers.onUpdate
+);
+
+router.put(
+  "/invoice-file/:id",
+  // auth.required,
+  controllers.onSaveInvoiceFile
 );
 
 router.delete(

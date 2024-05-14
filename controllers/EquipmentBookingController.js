@@ -2,7 +2,33 @@ const { PrismaClient } = require("@prisma/client");
 const uploadController = require("./UploadsController");
 const nodemailer = require("nodemailer");
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient().$extends({
+  result: {
+    equipment_booking: {
+      invoice_file: {
+        needs: { invoice_file: true },
+        compute(invoice_file) {
+          let invoice_file_1 = null;
+          if (invoice_file.invoice_file != null) {
+            invoice_file_1 =
+              process.env.PATH_UPLOAD + invoice_file.invoice_file;
+          }
+          return invoice_file_1;
+        },
+      },
+      slip_file: {
+        needs: { slip_file: true },
+        compute(slip_file) {
+          let slip_file_1 = null;
+          if (slip_file.slip_file != null) {
+            slip_file_1 = process.env.PATH_UPLOAD + slip_file.slip_file;
+          }
+          return slip_file_1;
+        },
+      },
+    },
+  },
+});
 
 // ค้นหา
 const filterData = (req) => {
@@ -132,6 +158,16 @@ const selectField = {
   member_status: true,
   period_time: true,
   district_code: true,
+  invoice_file: true,
+  invoice_at: true,
+  slip_bank: true,
+  slip_comment: true,
+  slip_date: true,
+  slip_file: true,
+  slip_price: true,
+  slip_return_comment: true,
+  slip_time: true,
+  slip_at: true,
   equipment: {
     select: {
       title_th: true,
@@ -314,8 +350,16 @@ const methods = {
   // สร้าง
   async onCreate(req, res) {
     try {
+      const item_latest = await prisma.equipment_booking.findFirst({
+        orderBy: {
+          code: "desc",
+        },
+        take: 1,
+      });
+
       const item = await prisma.equipment_booking.create({
         data: {
+          code: Number(item_latest.code + 1),
           booking_date: new Date(req.body.booking_date),
           period_time: Number(req.body.period_time),
           equipment_id: Number(req.body.equipment_id),
@@ -623,6 +667,7 @@ const methods = {
   },
 
   //   อนุมัติ
+
   async onApprove(req, res) {
     try {
       let check = true;
@@ -678,6 +723,234 @@ const methods = {
             "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> ดูรายละเอียดได้ที่ : <a href='" +
             process.env.PATH_CLIENT +
             "booking" +
+            "'>คลิก</a>", // html body
+        });
+      }
+
+      if (item.status_id == 5) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "sicckmutnb78", // email password
+          },
+        });
+        let text = {};
+        if (item.status_id == 5) {
+          text["subject"] = "กรุณาโอนเงินเพื่อชำระค่าบริการ/ทดสอบของศูนย์ SICC";
+        } else {
+          text["subject"] = "การจองของท่านได้รับการปฏิเสธ";
+        }
+
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: text.subject, // หัวข้ออีเมล
+          html:
+            "<b>เลขคำสั่งจอง: " +
+            item.code +
+            "<br>ยอดทำรายการจำนวน " +
+            item.price +
+            " บาท กรุณาโอนเงินเพื่อชำระค่าบริการ/ทดสอบของศูนย์ SICC</b><br> ดูรายละเอียดได้ที่ : <a href='" +
+            process.env.PATH_CLIENT +
+            "booking/" +
+            item.id +
+            "'>คลิก</a>", // html body
+        });
+      }
+
+      if (item.status_id == 6) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "sicckmutnb78", // email password
+          },
+        });
+        let text = {};
+        if (item.status_id == 6) {
+          text["subject"] = "กรุณาแก้ไขหลักฐานการชำระเงินของท่าน";
+        } else {
+          text["subject"] = "กรุณาแก้ไขหลักฐานการชำระเงินของท่าน";
+        }
+
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: text.subject, // หัวข้ออีเมล
+          html:
+            "<b>เลขคำสั่งจอง: " +
+            item.code +
+            "<br>กรุณาแก้ไขหลักฐานการชำระเงินของท่าน" +
+            "<br>หมายเหตุ : " +
+            item.reject_comment +
+            "<br>แก้ไขข้อมูลได้ที่ : <a href='" +
+            process.env.PATH_CLIENT +
+            "booking/" +
+            item.id +
+            "'>คลิก</a>", // html body
+        });
+      }
+
+      if (item.status_id == 8) {
+        const report = await prisma.report.findMany({
+          where: {
+            equipment_booking_id: Number(req.params.id),
+            deleted_at: null,
+          },
+        });
+
+        let text_report = "รายงาน : <br>";
+        let i = 0;
+        report.forEach((x) => {
+          i++;
+          text_report =
+            text_report +
+            `ไฟล์ที่ ${i} : <a href="${
+              process.env.PATH_UPLOAD + x.report_file
+            }" target="_blank">ดาวน์โหลด</a><br>`;
+        });
+
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "sicckmutnb78", // email password
+          },
+        });
+        let text = {};
+        if (item.status_id == 8) {
+          text["subject"] = "การชำระเงินของท่านได้รับการตรวจสอบเรียบร้อย";
+        } else {
+          text["subject"] = "การชำระเงินของท่านได้รับการตรวจสอบเรียบร้อย";
+        }
+
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: text.subject, // หัวข้ออีเมล
+          html:
+            "<b>เลขคำสั่งจอง: " +
+            item.code +
+            "<br>การชำระเงินของท่านได้รับการตรวจสอบเรียบร้อย" +
+            "<br>" +
+            text_report +
+            "ใบเสร็จรับเงิน : " +
+            "<a href='" +
+            item.invoice_file +
+            "' target='_blank'>ดาวน์โหลด</a>" +
+            "<br> ดูรายงานและใบเสร็จทั้งหมดได้ที่ : <a href='" +
+            process.env.PATH_CLIENT +
+            "booking" +
+            "'>คลิก</a>", // html body
+        });
+      }
+
+      res.status(200).json({ ...item, msg: "success" });
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
+  },
+
+  async onUploadSlip(req, res) {
+    try {
+      let check = true;
+
+      let pathFile = await uploadController.onUploadFile(
+        req,
+        "/images/slip/",
+        "slip_file"
+      );
+
+      if (pathFile == "error") {
+        return res.status(500).send("error");
+      }
+
+      const item = await prisma.equipment_booking.update({
+        where: {
+          id: Number(req.params.id),
+        },
+        data: {
+          slip_price: Number(req.body.slip_price),
+          slip_time: req.body.slip_time,
+          slip_bank: req.body.slip_bank,
+          slip_file: pathFile != null ? pathFile : undefined,
+          slip_date:
+            req.body.slip_date != null
+              ? new Date(req.body.slip_date)
+              : undefined,
+          slip_at:
+            req.body.slip_at != null ? new Date(req.body.slip_at) : undefined,
+          status_id: 7,
+          updated_by: "arnonr",
+        },
+      });
+      //   req.body.status_id = 7
+
+      //   email
+      let item_user = await prisma.user.findMany({
+        where: {
+          group_id: { in: [1, 3] },
+          is_active: 1,
+        },
+      });
+
+      let email1 = [];
+      let email2 = [];
+      for (let itu of item_user) {
+        if (itu.group_id == 1) {
+          email1.push(itu.email);
+        }
+
+        if (itu.group_id == 3) {
+          email2.push(itu.email);
+        }
+      }
+
+      let transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "sicckmutnb78", // email password
+        },
+      });
+      let text = {};
+      if (item.status_id == 2) {
+        text["subject"] = "โปรดตรวจสอบหลักฐานการชำระเงิน";
+      } else {
+        text["subject"] = "โปรดตรวจสอบหลักฐานการชำระเงิน";
+      }
+
+      if (email1.length > 0) {
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: email1, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: text["subject"],
+          html:
+            "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดตรวจสอบหลักฐานการชำระเงินที่ : <a href='" +
+            process.env.PATH_CLIENT +
+            "admin/booking" +
+            "'>คลิก</a>", // html body
+        });
+      }
+
+      if (email2.length > 0) {
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: email2, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: text["subject"],
+          html:
+            "<b>ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์</b><br> โปรดตรวจสอบหลักฐานการชำระเงินที่ : <a href='" +
+            process.env.PATH_CLIENT +
+            "/admin/booking" +
             "'>คลิก</a>", // html body
         });
       }
@@ -769,286 +1042,96 @@ const methods = {
       res.status(400).json({ msg: error.message });
     }
   },
+
+  async onSaveInvoiceFile(req, res) {
+    try {
+      let pathFile = await uploadController.onUploadFile(
+        req,
+        "/images/invoice/",
+        "invoice_file"
+      );
+
+      if (pathFile == "error") {
+        return res.status(500).send("error");
+      }
+
+      const item = await prisma.equipment_booking.update({
+        where: {
+          id: Number(req.params.id),
+        },
+        data: {
+          invoice_at:
+            req.body.invoice_at != null
+              ? new Date(req.body.invoice_at)
+              : undefined,
+          invoice_file: pathFile != null ? pathFile : undefined,
+          updated_by: "arnonr",
+        },
+      });
+
+      res.status(200).json({
+        ...item,
+        msg: "success",
+      });
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
+  },
+
+  async onUpdateStatus(req, res) {
+    try {
+      let check = true;
+
+      const item = await prisma.equipment_booking.update({
+        where: {
+          id: Number(req.params.id),
+        },
+        data: {
+          status_id:
+            req.body.status_id != null ? Number(req.body.status_id) : undefined,
+          updated_by: "arnonr",
+        },
+      });
+
+      if (item.status_id == 5) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          auth: {
+            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "sicckmutnb78", // email password
+          },
+        });
+        let text = {};
+        if (item.status_id == 5) {
+          text["subject"] = "กรุณาโอนเงินเพื่อชำระค่าบริการ/ทดสอบของศูนย์ SICC";
+        } else {
+          text["subject"] = "ยอดทำรายการจำนวน " + item.price + " บาท";
+        }
+
+        await transporter.sendMail({
+          from: "ศูนย์เครื่องมือวิทยาศาสตร์และคอมพิวเตอร์สมรรถนะสูง คณะวิทยาศาสตร์ประยุกต์", // อีเมลผู้ส่ง
+          to: item.email, // อีเมลผู้รับ สามารถกำหนดได้มากกว่า 1 อีเมล โดยขั้นด้วย ,(Comma)
+          subject: text.subject, // หัวข้ออีเมล
+          html:
+            "<b>ยอดทำรายการจำนวน " +
+            item.price +
+            " บาท กรุณาโอนเงินเพื่อชำระค่าบริการ/ทดสอบของศูนย์ SICC</b><br> ดูรายละเอียดได้ที่ : <a href='" +
+            process.env.PATH_CLIENT +
+            "booking" +
+            "'>คลิก</a>", // html body
+        });
+      }
+
+      res.status(200).json({ ...item, msg: "success" });
+    } catch (error) {
+      res.status(400).json({ msg: error.message });
+    }
+    // Send Email ให้ชำระเงิน
+    // Send Email ให้แก้ไขข้อมูลการชำระเงิน
+    // Send Email Report and Invoice
+  },
 };
 
 module.exports = { ...methods };
-
-/* <div>
-<table
-  style="
-    width: 1000px;
-    font-family: Roboto, RobotoDraft, Helvetica, Arial,
-      sans-serif;
-    border-style: solid;
-    border-width: thin;
-    border-color: #dadce0;
-    border-radius: 8px;
-    padding: 40px;
-    margin: auto;
-  "
->
-  <tr>
-    <td colspan="2" style="text-align: right;padding-bottom: 1em;">
-      <span> เลขที่รายการสั่งซื้อ SICC-BO-${item.id} </span>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="text-align: right;padding-bottom: 2em;">
-        <span> วันที่ ${item.date} </span>
-    </td>
-  </tr>
-
-  <tr>
-    <td colspan="2" style="text-align: center">
-      <h3 style="padding-bottom: 1em">รายการสั่งซื้อสินค้า</h3></span>
-    </td>
-  </tr>
-
-  <tr>
-    <td>
-        <table style="width: 500px; margin-right: 1em;">
-            <tr>
-              <td
-                colspan="2"
-                style="
-                  font-weight: bold;
-                  text-align: center;
-                  background-color: #ffcb05;
-                  border-radius: 0.5em;
-                  padding: 0.4em;
-                "
-              >
-                ชื่อผู้สั่ง/จัดส่งสินค้า
-              </td>
-            </tr>
-            <tr>
-              <td style="font-weight: bold;padding-top: 1em;">ชื่อ นามสกุล :</td>
-              <td style="font-style: italic;padding-top: 1em;">${
-                item.firstname + " " + item.surname
-              }</td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr style="border-color: #eee;border-style: dotted;" />
-                    </td>
-            </tr>
-            <tr>
-              <td style="font-weight: bold;">บริษัท :</td>
-              <td style="font-style: italic;">
-              ${item.organization}
-              </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr style="border-color: #eee;border-style: dotted;" />
-                    </td>
-            </tr>
-
-            <tr>
-              <td style="font-weight: bold;">ที่อยู่ :</td>
-              <td style="font-style: italic;">
-              ${item.contact_address}
-              </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr style="border-color: #eee;border-style: dotted;" />
-                    </td>
-            </tr>
-            <tr>
-              <td style="font-weight: bold;">จังหวัด :</td>
-              <td style="font-style: italic;">
-              ${item.contact_address}
-              </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr style="border-color: #eee;border-style: dotted;" />
-                    </td>
-            </tr>
-            <tr>
-              <td style="font-weight: bold;">รหัสไปรษณีย์ :</td>
-              <td style="font-style: italic;">
-              ${item.contact_address}
-              </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr style="border-color: #eee;border-style: dotted;" />
-                    </td>
-            </tr>
-            <tr>
-              <td style="font-weight: bold;">โทรศัพท์ :</td>
-              <td style="font-style: italic;">
-              ${item.phone}
-              </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr style="border-color: #eee;border-style: dotted;" />
-                    </td>
-            </tr>
-            <tr>
-              <td style="font-weight: bold;">โทรสาร :</td>
-              <td style="font-style: italic;">
-                02-555-2020
-              </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                <hr style="border-color: #eee;border-style: dotted;" />
-                    </td>
-            </tr>
-            <tr>
-                <td style="font-weight: bold;">อีเมล :</td>
-                <td style="font-style: italic;">
-                  arnon.r@tgde.kmutnb.ac.th
-                </td>
-              </tr>
-
-          </table>
-    </td>
-    <td style="border-left: 1px solid;">
-      <table style="width: 500px; margin-left: 1em;">
-        <tr>
-          <td
-            colspan="2"
-            style="
-              font-weight: bold;
-              text-align: center;
-              background-color: #ffcb05;
-              border-radius: 0.5em;
-              padding: 0.4em;
-            "
-          >
-            ชื่อออกใบกำกับภาษี
-          </td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold;padding-top: 1em;">ชื่อ นามสกุล :</td>
-          <td style="font-style: italic;padding-top: 1em;">อานนท์ รักจักร์</td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            <hr style="border-color: #eee;border-style: dotted;" />
-                </td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold;">บริษัท :</td>
-          <td style="font-style: italic;" >
-            มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ
-          </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            <hr style="border-color: #eee;border-style: dotted;" />
-                </td>
-        </tr>
-
-        <tr>
-          <td style="font-weight: bold;">ที่อยู่ :</td>
-          <td style="font-style: italic;">
-            705 ซ.จรัญสนิทวงศ์ 89 แขวงบางอ้อ เขตบางพลัด
-          </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            <hr style="border-color: #eee;border-style: dotted;" />
-                </td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold;">จังหวัด :</td>
-          <td style="font-style: italic;">
-            กรุงเทพมหานคร
-          </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            <hr style="border-color: #eee;border-style: dotted;" />
-                </td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold;">รหัสไปรษณีย์ :</td>
-          <td style="font-style: italic;">
-            10700
-          </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            <hr style="border-color: #eee;border-style: dotted;" />
-                </td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold;">โทรศัพท์ :</td>
-          <td style="font-style: italic;">
-            02-555-2000
-          </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            <hr style="border-color: #eee;border-style: dotted;" />
-                </td>
-        </tr>
-        <tr>
-          <td style="font-weight: bold;">โทรสาร :</td>
-          <td style="font-style: italic;">
-            02-555-2020
-          </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-            <hr style="border-color: #eee;border-style: dotted;" />
-                </td>
-        </tr>
-        <tr>
-            <td style="font-weight: bold;">อีเมล :</td>
-            <td style="font-style: italic;">
-              arnon.r@tgde.kmutnb.ac.th
-            </td>
-          </tr>
-
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="text-align: left;padding-top: 2em;">
-
-      <hr>
-        <div style="margin-top: 1em;"><span  style="font-weight: bold;">เครื่องมือ/Scientific Instrument : </span><span style="font-weight: bold;color:#ffcb05;font-style: italic;">นิวเคลียร์แมกเนติกเรโซแนนซ์สเปกโตรมิเตอร์ </span></div>
-        <div style="margin-top: 1em;"><span  style="font-weight: bold;">วันที่จอง/Booking Date : </span><span style="font-weight: bold;color:#ffcb05;font-style: italic;">16 มี.ค. 2567 </span></div>
-        <div style="margin-top: 1em;"><span  style="font-weight: bold;">ข้อมูลตัวอย่าง/Example : </span><span style="font-weight: bold;color:#ffcb05;font-style: italic;">TEST </span></div>
-        </td>
-        </tr>
-
-  <tr>
-    <td colspan="2" style="text-align: center;padding-top: 2em;">
-      <table style="width:100%;border-style:solid;border-width:1px; border-collapse: collapse">
-        <tr>
-          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">ลําดับ</th>
-          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">รายการวิเคราะห์</th>
-          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">จำนวน</th>
-          <th style="text-align: center;border-style:solid;border-width:1px;background-color: #ffcb05;padding:0.4em">ราคา</th>
-        </tr>
-        <tr>
-          <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">1</td>
-          <td style="border-style:solid;border-width:1px;padding:0.4em;">Scanning Electron Microscope SEM</td>
-          <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">1 ชั่วโมง</td>
-          <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">450.00</td>
-        </tr>
-        <tr>
-            <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">2</td>
-            <td style="border-style:solid;border-width:1px;padding:0.4em;">Scanning Electron Microscope SEM</td>
-            <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">1 ชั่วโมง</td>
-            <td style="border-style:solid;border-width:1px;text-align: center;padding:0.4em;">450.00</td>
-          </tr>
-
-          <tr>
-            <td colspan="3" style="border-style:solid;border-width:1px;text-align: right;padding:0.4em;font-weight: bold;">รวม</td>
-            <td style="border-style:solid;border-width:1px;padding:0.4em;text-align: center;">900.00</td>
-          </tr>
-
-      </table>
-    </td>
-  </tr>
-</table>
-</div> */
