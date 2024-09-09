@@ -404,7 +404,7 @@ const methods = {
           data: data_method,
         });
       }
-
+      
       let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,

@@ -237,6 +237,11 @@ model equipment_method {
     updated_by               String?                    @db.VarChar(255)
     deleted_at               DateTime?
     equipment_id             Int
+    member1_price            Decimal?                   @db.Decimal(10,2)
+    member2_price            Decimal?                   @db.Decimal(10,2)
+    member3_price            Decimal?                   @db.Decimal(10,2)
+    member4_price            Decimal?                   @db.Decimal(10,2)
+    member5_price            Decimal?                   @db.Decimal(10,2)
     is_fixrate               Int?
     unit_en                  String?                    @db.VarChar(500)
     unit_th                  String?                    @db.VarChar(500)
