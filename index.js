@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(fileUpload());
-app.use("/static", express.static(__dirname + "/public"));
+app.use("/sicc-static", express.static(__dirname + "/public"));
 
 app.use(routes);
 
