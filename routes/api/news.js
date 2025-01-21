@@ -9,21 +9,21 @@ router.get("/", controllers.onGetAll);
 router.get("/:id", controllers.onGetById);
 
 router.post(
-  "/",
-  // auth.required,
-  controllers.onCreate
+    "/:id",
+    // auth.required,
+    controllers.onUpdate
 );
 
-router.put(
-  "/:id",
-  // auth.required,
-  controllers.onUpdate
+router.post(
+    "/",
+    // auth.required,
+    controllers.onCreate
 );
 
 router.delete(
-  "/:id",
-  //   auth.required,
-  controllers.onDelete
+    "/:id",
+    //   auth.required,
+    controllers.onDelete
 );
 
 module.exports = router;
