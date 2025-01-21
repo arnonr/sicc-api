@@ -473,7 +473,7 @@ const methods = {
            Tel : +66 2555 2000 Ext.4257
          </div>
          <div style="font-size: 20px; margin-bottom: 22px">
-           Email : sicc@sci.kmutnb.ac.th
+           Email : sitt@sci.kmutnb.ac.th
          </div>
          <div style="font-size: 20px; margin-bottom: 22px">
            Website : <a href="http://sicc.sci.kmutnb.ac.th/">sicc.sci.kmutnb.ac.th</a>
