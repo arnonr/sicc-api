@@ -453,7 +453,7 @@ const methods = {
        >
          <div style="margin-bottom: 22px">
            <img
-             src="http://sicc.sci.kmutnb.ac.th/_nuxt/logo-sitt.5766f97c.png"
+             src="http://sitt.sci.kmutnb.ac.th/_nuxt/logo-sitt.5766f97c.png"
              alt=""
              style="width: 160px"
              class="CToWUd"
@@ -476,7 +476,7 @@ const methods = {
            Email : sitt@sci.kmutnb.ac.th
          </div>
          <div style="font-size: 20px; margin-bottom: 22px">
-           Website : <a href="http://sicc.sci.kmutnb.ac.th/">sicc.sci.kmutnb.ac.th</a>
+           Website : <a href="http://sitt.sci.kmutnb.ac.th/">sitt.sci.kmutnb.ac.th</a>
          </div>
          <div style="border-top: 1px solid #dadce0; margin: 20px 0 10px 0"></div>
        </div>`,
