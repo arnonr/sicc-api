@@ -356,10 +356,10 @@ const methods = {
         secure: false,
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
-          //    sicc@sci.kmutnb.ac.th
-          //  sicckmutnb78
-          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "sicckmutnb78", // email password
+          //    sitt@sci.kmutnb.ac.th
+          //  siccsitt
+          user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "siccsitt", // email password
         },
       });
 
@@ -518,8 +518,8 @@ const methods = {
         secure: false,
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
-          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "sicckmutnb78", // email password
+          user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "siccsitt", // email password
         },
       });
 
@@ -573,8 +573,8 @@ const methods = {
         secure: false,
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
-          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "sicckmutnb78", // email password
+          user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "siccsitt", // email password
         },
       });
 

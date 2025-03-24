@@ -336,8 +336,8 @@ const methods = {
       //     port: 587,
       //     secure: false,
       //     auth: {
-      //       user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-      //       pass: "sicckmutnb78", // email password
+      //       user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+      //       pass: "siccsitt", // email password
       //     },
       //   });
 
@@ -410,8 +410,8 @@ const methods = {
         port: 587,
         secure: false,
         auth: {
-          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "sicckmutnb78", // email password
+          user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "siccsitt", // email password
         },
       });
 
@@ -704,8 +704,8 @@ const methods = {
           port: 587,
           secure: false,
           auth: {
-            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-            pass: "sicckmutnb78", // email password
+            user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "siccsitt", // email password
           },
         });
         let text = {};
@@ -733,8 +733,8 @@ const methods = {
           port: 587,
           secure: false,
           auth: {
-            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-            pass: "sicckmutnb78", // email password
+            user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "siccsitt", // email password
           },
         });
         let text = {};
@@ -767,8 +767,8 @@ const methods = {
           port: 587,
           secure: false,
           auth: {
-            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-            pass: "sicckmutnb78", // email password
+            user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "siccsitt", // email password
           },
         });
         let text = {};
@@ -820,8 +820,8 @@ const methods = {
           port: 587,
           secure: false,
           auth: {
-            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-            pass: "sicckmutnb78", // email password
+            user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "siccsitt", // email password
           },
         });
         let text = {};
@@ -918,8 +918,8 @@ const methods = {
         port: 587,
         secure: false,
         auth: {
-          user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "sicckmutnb78", // email password
+          user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+          pass: "siccsitt", // email password
         },
       });
       let text = {};
@@ -1099,8 +1099,8 @@ const methods = {
           port: 587,
           secure: false,
           auth: {
-            user: "sicc@sci.kmutnb.ac.th", // email user ของเรา
-            pass: "sicckmutnb78", // email password
+            user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
+            pass: "siccsitt", // email password
           },
         });
         let text = {};
