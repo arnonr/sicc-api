@@ -91,6 +91,8 @@ const selectField = {
   name_short: true,
   is_publish: true,
   name: true,
+  contact_us_th: true,
+  contact_us_en: true,
 };
 
 const checkLanguage = (req) => {
@@ -168,6 +170,8 @@ const methods = {
           name_th: req.body.name_th,
           name_en: req.body.name_en,
           name_short: req.body.name_short,
+          contact_us_th: req.body.contact_us_th,
+          contact_us_en: req.body.contact_us_en,
           is_publish: Number(req.body.is_publish),
           created_by: "arnonr",
           updated_by: "arnonr",
@@ -192,6 +196,10 @@ const methods = {
           name_en: req.body.name_en != null ? req.body.name_en : undefined,
           name_short:
             req.body.name_short != null ? req.body.name_short : undefined,
+          contact_us_th:
+            req.body.contact_us_th != null ? req.body.contact_us_th : undefined,
+          contact_us_en:
+            req.body.contact_us_en != null ? req.body.contact_us_en : undefined,
           is_publish: Number(req.body.is_publish),
           updated_by: "arnonr",
         },

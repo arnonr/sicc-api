@@ -166,6 +166,8 @@ const selectField = {
       name_en: true,
       name: true,
       name_short: true,
+      contact_us_th: true,
+      contact_us_en: true,
     },
   },
 };
