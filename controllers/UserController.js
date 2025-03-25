@@ -398,7 +398,7 @@ const methods = {
             />
           </div>
           <div style="font-size: 20px; margin-bottom: 22px">
-            ยืนยันการสมัครสมาชิกกับศูนย์เครื่องมือวิทยาศาสตร์และถ่ายทอดเทคโนโลยี<br />(Scientific Instrument and Technological Transfer Center : SITT, Faculty of Applied Science)
+            ยืนยันการสมัครสมาชิกกับศูนย์เครื่องมือวิทยาศาสตร์และถ่ายทอดเทคโนโลยี<br />(Scientific Instrument and Technological Transfer Center : SITT)
           </div>
           <div style="font-size: 20px; margin-bottom: 22px">
             ขอบคุณสำหรับการสมัครสมาชิกกับเว็บไซต์
