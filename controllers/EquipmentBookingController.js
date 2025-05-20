@@ -426,7 +426,7 @@ const methods = {
                 secure: false,
                 auth: {
                     user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                    pass: "siccsitt", // email password
+                    pass: "cxeu ytle zkjk gyhy", // email password
                 },
             });
 
@@ -771,7 +771,7 @@ const methods = {
                     secure: false,
                     auth: {
                         user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                        pass: "siccsitt", // email password
+                        pass: "cxeu ytle zkjk gyhy", // email password
                     },
                 });
                 let text = {};
@@ -803,7 +803,7 @@ const methods = {
                     secure: false,
                     auth: {
                         user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                        pass: "siccsitt", // email password
+                        pass: "cxeu ytle zkjk gyhy", // email password
                     },
                 });
                 let text = {};
@@ -834,7 +834,7 @@ const methods = {
                     secure: false,
                     auth: {
                         user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                        pass: "siccsitt", // email password
+                        pass: "cxeu ytle zkjk gyhy", // email password
                     },
                 });
                 let text = {};
@@ -883,7 +883,7 @@ const methods = {
                     secure: false,
                     auth: {
                         user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                        pass: "siccsitt", // email password
+                        pass: "cxeu ytle zkjk gyhy", // email password
                     },
                 });
                 let text = {};
@@ -940,7 +940,7 @@ const methods = {
                         secure: false,
                         auth: {
                             user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                            pass: "siccsitt", // email password
+                            pass: "cxeu ytle zkjk gyhy", // email password
                         },
                     });
                     let text = {};
@@ -984,7 +984,7 @@ const methods = {
                     secure: false,
                     auth: {
                         user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                        pass: "siccsitt", // email password
+                        pass: "cxeu ytle zkjk gyhy", // email password
                     },
                 });
                 let text = {};
@@ -1274,7 +1274,7 @@ const methods = {
                 secure: false,
                 auth: {
                     user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                    pass: "siccsitt", // email password
+                    pass: "cxeu ytle zkjk gyhy", // email password
                 },
             });
             let text = {};
@@ -1461,7 +1461,7 @@ const methods = {
                     secure: false,
                     auth: {
                         user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-                        pass: "siccsitt", // email password
+                        pass: "cxeu ytle zkjk gyhy", // email password
                     },
                 });
                 let text = {};

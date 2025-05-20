@@ -359,7 +359,7 @@ const methods = {
           //    sitt@sci.kmutnb.ac.th
           //  siccsitt
           user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "siccsitt", // email password
+          pass: "cxeu ytle zkjk gyhy", // email password
         },
       });
 
@@ -519,7 +519,7 @@ const methods = {
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
           user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "siccsitt", // email password
+          pass: "cxeu ytle zkjk gyhy", // email password
         },
       });
 
@@ -574,7 +574,7 @@ const methods = {
         auth: {
           // ข้อมูลการเข้าสู่ระบบ
           user: "sitt@sci.kmutnb.ac.th", // email user ของเรา
-          pass: "siccsitt", // email password
+          pass: "cxeu ytle zkjk gyhy", // email password
         },
       });
 
